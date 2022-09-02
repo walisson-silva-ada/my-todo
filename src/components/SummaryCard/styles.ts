@@ -10,7 +10,8 @@ export const Container = styled.div<ContainerProps>`
   gap: 1rem;
   flex: 1;
 
-  color: ${({ theme }) => theme.colors["black"]};
+  color: ${({ theme, isDoneTasks }) =>
+    isDoneTasks ? theme.colors.white : theme.colors["black"]};
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
   padding: 0.5rem;
   border-radius: 5px;
