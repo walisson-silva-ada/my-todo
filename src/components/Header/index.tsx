@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ReactModal from "react-modal";
+import { TodoListContext } from "../../TodoListContext";
 import * as S from "./styles";
 
 export function Header() {
+  const data = useContext(TodoListContext);
+  console.log("Header:", data);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function toggleModal() {
