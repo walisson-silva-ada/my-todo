@@ -83,3 +83,39 @@ export const AddTaskButton = styled.button`
     transition: filter 0.3s;
   }
 `;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: 100%;
+`;
+
+export const ModalTitle = styled.h3`
+  margin-bottom: 1rem;
+  font-size: 2rem;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  margin-right: 1rem;
+  height: 56px;
+  padding: 0 1rem;
+  outline: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  background-color: ${({ theme }) => theme.colors["shape"]};
+  border: 2px solid transparent;
+
+  transition: all 0.3s;
+
+  &:focus {
+    border: 2px solid ${({ theme }) => theme.colors["secondary-color"]};
+    transition: all 0.3s;
+  }
+
+  &::placeholder {
+    color: #777;
+  }
+`;

@@ -87,3 +87,8 @@ export const TodoEdit = styled.span`
     line-height: 1;
   }
 `;
+
+export const Title = styled.h2`
+  font-size: 2rem;
+  margin-bottom: 2rem;
+`;
