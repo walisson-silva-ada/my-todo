@@ -1,9 +1,16 @@
 import { createContext, ReactElement, ReactNode, useState } from "react";
+import { createTaskOnApi } from "./services/tasks";
 import { ITask } from "./types/ITask";
 
 interface TodoListContextData {
   tasks: ITask[];
   handleRemoveTask: (idToRemove: number) => void;
+  handleCreateNewTask: (
+    title: string,
+    category: string,
+    date: Date
+  ) => Promise<void>;
+  handleUpdateTaskStatus: (taskIdToUpdate: number) => void;
 }
 
 export const TodoListContext = createContext({} as TodoListContextData);
@@ -13,58 +20,56 @@ interface TodoListProviderProps {
 }
 
 export function TodoListProvider({ children }: TodoListProviderProps) {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Tarefa 1",
-      category: "Estudos",
-      date: new Date(),
-      done: true,
-    },
-    {
-      id: 2,
-      title: "Tarefa 2",
-      category: "Estudos",
-      date: new Date(),
-      done: true,
-    },
-    {
-      id: 3,
-      title: "Tarefa 3",
-      category: "Estudos",
-      date: new Date(),
-      done: false,
-    },
-    {
-      id: 4,
-      title: "Tarefa 4",
-      category: "Estudos",
-      date: new Date(),
-      done: false,
-    },
-    {
-      id: 5,
-      title: "Tarefa 5",
-      category: "Estudos",
-      date: new Date(),
-      done: false,
-    },
-  ] as ITask[]);
+  const [tasks, setTasks] = useState([] as ITask[]);
 
   function handleRemoveTask(idToRemove: number) {
     const filteredTasks = tasks.filter((task) => task.id !== idToRemove);
     setTasks(filteredTasks);
   }
 
-  // function handleCreateNewTask(title, category, date) {
+  function handleUpdateTaskStatus(taskIdToUpdate: number) {
+    // Seguindo o princípio da imutabilidade
+    const newTasks = tasks.map((task) => {
+      if (task.id === taskIdToUpdate) {
+        return {
+          ...task,
+          done: !task.done,
+        };
+      }
 
-  // }
+      return task;
+    });
+
+    setTasks(newTasks);
+  }
+
+  async function handleCreateNewTask(
+    title: string,
+    category: string,
+    date: Date
+  ) {
+    // Seguindo o princípio da imutabilidade
+    const newTask: ITask = {
+      id: new Date().getTime(),
+      title: title,
+      category: category,
+      date: date,
+      done: false,
+    };
+
+    const tasksUpdated = [...tasks, newTask];
+
+    setTasks(tasksUpdated);
+    await createTaskOnApi(newTask);
+  }
 
   return (
     <TodoListContext.Provider
       value={{
         tasks,
         handleRemoveTask,
+        handleCreateNewTask,
+        handleUpdateTaskStatus,
       }}
     >
       {children}

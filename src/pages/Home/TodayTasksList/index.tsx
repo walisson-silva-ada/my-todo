@@ -5,7 +5,8 @@ import { TodoListContext } from "../../../TodoListContext";
 import * as S from "./styles";
 
 export function TodayTasksList() {
-  const { tasks, handleRemoveTask } = useContext(TodoListContext);
+  const { tasks, handleRemoveTask, handleUpdateTaskStatus } =
+    useContext(TodoListContext);
 
   function removeTask(idToRemove: number) {
     console.log("Remover tarefa:", idToRemove);
@@ -27,7 +28,7 @@ export function TodayTasksList() {
               <S.TodoCheck
                 type="checkbox"
                 checked={task.done}
-                onChange={() => {}}
+                onChange={() => handleUpdateTaskStatus(task.id)}
               />
               <S.TodoLabel isChecked={task.done}>{task.title}</S.TodoLabel>
             </S.TodoContent>

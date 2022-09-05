@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import { TodoListContext } from "../../TodoListContext";
 import * as S from "./styles";
 
 export function Header() {
-  const data = useContext(TodoListContext);
-  console.log("Header:", data);
+  const { handleCreateNewTask } = useContext(TodoListContext);
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,9 +16,21 @@ export function Header() {
     setIsModalOpen(!isModalOpen);
   }
 
-  function addNewTask() {
+  async function addNewTask() {
     // adicionar a tarefa digitada dentro da lista de tarefas
-    toggleModal();
+    console.log(title, category, date);
+
+    if (title && category && date) {
+      await handleCreateNewTask(title, category, new Date(date));
+      setTitle("");
+      setCategory("");
+      setDate("");
+
+      toggleModal();
+      toast.success("Tarefa adicionada com sucesso!");
+    } else {
+      alert("Você precisa preencher todos os campos.");
+    }
   }
 
   return (
@@ -66,9 +81,25 @@ export function Header() {
         <S.ModalContainer>
           <S.ModalTitle>Add task</S.ModalTitle>
 
-          <S.Input type="text" placeholder="Task title..." autoFocus />
-          <S.Input type="text" placeholder="Task category..." />
-          <S.Input type="date" />
+          <S.Input
+            type="text"
+            placeholder="Task title..."
+            autoFocus
+            value={title}
+            onChange={(event) => setTitle(event.currentTarget.value)}
+          />
+          <S.Input
+            type="text"
+            placeholder="Task category..."
+            value={category}
+            onChange={(event) => setCategory(event.currentTarget.value)}
+          />
+          <S.Input
+            type="date"
+            value={date}
+            min="2022-09-05"
+            onChange={(event) => setDate(event.currentTarget.value)}
+          />
 
           <S.AddTaskButton onClick={addNewTask}>Add</S.AddTaskButton>
         </S.ModalContainer>
