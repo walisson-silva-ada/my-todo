@@ -1,6 +1,12 @@
-import { createContext, ReactElement, ReactNode, useState } from "react";
-import { createTaskOnApi } from "./services/tasks";
-import { ITask } from "./types/ITask";
+import {
+  createContext,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useState,
+} from "react";
+import { createTaskOnApi } from "../services/tasks";
+import { ITask } from "../types/ITask";
 
 interface TodoListContextData {
   tasks: ITask[];
@@ -75,4 +81,9 @@ export function TodoListProvider({ children }: TodoListProviderProps) {
       {children}
     </TodoListContext.Provider>
   );
+}
+
+export function useTodoList() {
+  const contexto = useContext(TodoListContext);
+  return contexto;
 }

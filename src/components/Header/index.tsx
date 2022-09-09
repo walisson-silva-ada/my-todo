@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
-import { TodoListContext } from "../../TodoListContext";
+import { useTodoList } from "../../hooks/TodoListContext";
 import * as S from "./styles";
 
 export function Header() {
-  const { handleCreateNewTask } = useContext(TodoListContext);
+  const { handleCreateNewTask } = useTodoList();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");

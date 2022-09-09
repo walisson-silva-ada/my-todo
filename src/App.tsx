@@ -7,7 +7,7 @@ import defaultTheme from "./styles/themes/theme";
 import lightTheme from "./styles/themes/light";
 import { useState } from "react";
 import { Home } from "./pages/Home";
-import { TodoListProvider } from "./TodoListContext";
+import { TodoListProvider } from "./hooks/TodoListContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

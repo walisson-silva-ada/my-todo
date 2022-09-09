@@ -1,12 +1,10 @@
-import { useContext } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
-import { TodoListContext } from "../../../TodoListContext";
+import { useTodoList } from "../../../hooks/TodoListContext";
 
 import * as S from "./styles";
 
 export function TodayTasksList() {
-  const { tasks, handleRemoveTask, handleUpdateTaskStatus } =
-    useContext(TodoListContext);
+  const { tasks, handleRemoveTask, handleUpdateTaskStatus } = useTodoList();
 
   function removeTask(idToRemove: number) {
     console.log("Remover tarefa:", idToRemove);

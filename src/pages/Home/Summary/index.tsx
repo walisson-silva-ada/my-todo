@@ -1,11 +1,9 @@
-import { useContext } from "react";
 import { SummaryCard } from "../../../components/SummaryCard";
-import { TodoListContext } from "../../../TodoListContext";
-import { ITask } from "../../../types/ITask";
+import { useTodoList } from "../../../hooks/TodoListContext";
 import * as S from "./styles";
 
 export function Summary() {
-  const { tasks } = useContext(TodoListContext);
+  const { tasks } = useTodoList();
 
   const todayTasksTotal = tasks.length;
   const pendingTasksTotal = tasks.filter((task) => !task.done).length;
